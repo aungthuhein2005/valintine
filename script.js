@@ -25,7 +25,7 @@ const click = (link) => {
 
 const giveChoco = async (id) => {
   if (user_id !== "") {
-    const fetchData = await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+    const fetchUser = await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
       method: "GET",
       headers: {
         "X-Master-Key":
@@ -34,7 +34,7 @@ const giveChoco = async (id) => {
       mode: "no-cors",
     });
 
-    const response = await fetchData.json();
+    const response = await fetchUser.json();
     const { chocolate, name, image, phone, password, socialLink } =
       response.record;
 
