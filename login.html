@@ -17,9 +17,9 @@
 
 <body>
 
-    <main class="md:w-1/2 m-auto px-4" >
+    <main class="md:w-1/2 m-auto px-4" onsubmit="handleFormSubmission(event)">
         <h1 class="text-xl pb-4">Login</h1>
-        <form action="" method="" onsubmit="handleFormSubmission(event)" class="border w-100 p-4">
+        <form action="" method="post" class="border w-100 p-4">
             <div class="mt-3 ">
                 <labe class="pb-2 font-bold">Enter Phone</labe><br>
                 <input type="tel" name="phone" id="phone" class="border outline-none p-1 w-full my-2"
@@ -38,51 +38,92 @@
 
     <script>
             if(localStorage.getItem("id") !== null) window.location.href = 'main.html';
-        function handleFormSubmission(e) {
+        // function handleFormSubmission(e) {
+        //     e.preventDefault();
+        //     // Get form values
+        //     const phone = document.getElementById('phone').value;
+        //     const password = document.getElementById('password').value;
+        //     const errorText = document.getElementById("error");
+
+        //     fetch('https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/', {
+        //         method: 'GET',
+        //         headers: {
+        //             "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+        //         }
+        //     })
+        //         .then(response => response.json())
+                
+        //         .then(data => {
+        //             data.forEach((item) => {
+        //                 console.log(item.record);   
+        //                 fetch(`https://api.jsonbin.io/v3/b/${item.record}`, {
+        //                         method: 'GET',
+        //                         mode: 'no-cors',
+        //                         headers: {
+        //                             "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+        //                         }
+        //                     })
+        //                     .then(response => console.log(response))
+        //                     .then(response => response.json())
+        //                     .then(value=>{
+        //                         console.log(value);
+        //                         if(value.record.phone == phone && value.record.password == password){
+        //                             localStorage.setItem("id",value.metadata.id);
+        //                             window.location.href = "main.html";
+        //                         }else{
+        //                             errorText.innerHTML = 'Login fail';
+        //                         }
+        //                     })
+        //                     .catch((e)=>{
+        //                         errorText.innerHTML = "Server error";
+        //                     })
+        //             })
+        //         })
+        //         .catch(e => {
+        //             console.log(e);
+        //         })
+              
+            
+        // }
+        async function handleFormSubmission(e) {
             e.preventDefault();
-            // Get form values
+
             const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
             const errorText = document.getElementById("error");
 
-            fetch('https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/', {
-                method: 'GET',
-                mode: 'no-cors',
-                headers: {
-                                                        "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-    'Content-Type': 'application/json',
+            try {
+                const binsResponse = await fetch('https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/', {
+                    method: 'GET',
+                    headers: {
+                        "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+                    }
+                });
 
-                    "Access-Control-Allow-Origin": "*",
+                const binsData = await binsResponse.json();
+
+                for (const item of binsData) {
+                    const binResponse = await fetch(`https://api.jsonbin.io/v3/b/${item.record}`, {
+                        method: 'GET',
+                        headers: {
+                            "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+                        }
+                    });
+
+                    const binData = await binResponse.json();
+
+                    if (binData.record.phone == phone && binData.record.password == password) {
+                        localStorage.setItem("id", binData.metadata.id);
+                        window.location.href = "main.html";
+                        return;
+                    }
                 }
-            })
-                .then(response => response)
-            
-                .then(data => {
-                    data.forEach((item) => {
-                        fetch(`https://api.jsonbin.io/v3/b/${item.record}`, {
-                                method: 'GET',
-                                mode: 'no-cors',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-                                   
-                                                                   }
-                            })
-                            .then(response => response.json())
-                            .then(value=>{
-                                if(value.record.phone == phone && value.record.password == password){
-                                    localStorage.setItem("id",value.metadata.id);
-                                    window.location.href = "main.html";
-                                }else{
-                                    errorText.innerHTML = 'Login fail';
-                                }
-                            }).catch((e)=>{
-                                errorText.innerHTML = "Server error";
-                            })
-                    })
-                }).catch((e)=>console.error(e));
-              
-            
+
+                errorText.innerHTML = 'Login fail';
+            } catch (error) {
+                console.error("Error:", error);
+                errorText.innerHTML = "Server error";
+            }
         }
     </script>
 </body>
