@@ -50,6 +50,7 @@
                 mode: 'cors',
                 headers: {
                     "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+                    "Access-Control-Allow-Origin":'https://aungthuhein2005.github.io',
                 }
             })
                 .then(response => response.json())
@@ -59,6 +60,7 @@
                                 method: 'GET',
                                 headers: {
                                     "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+                                    "Access-Control-Allow-Origin":'https://aungthuhein2005.github.io',
                                 }
                             })
                             .then(response => response.json())
