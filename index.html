@@ -29,6 +29,7 @@
             id="name"
             class="border outline-none p-1 w-full my-2"
             placeholder="Enter name"
+            maxlength="20"
             required
           />
         </div>
@@ -40,6 +41,7 @@
             id="phone"
             class="border outline-none p-1 w-full my-2"
             placeholder="Enter phone"
+            minlength="11"
             required
           />
         </div>
@@ -138,6 +140,7 @@
                             .then(value=>{
                                 if(value.record.phone == phone){
                                   errorText.innerHTML ="<span class='text-red-600'>Accoung already exist...</span>";
+                                  return;
                                 }
                             }).catch((e)=>{
                                 errorText.innerHTML = "Server error";

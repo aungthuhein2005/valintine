@@ -101,7 +101,7 @@ fetch("https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/", {
                                 : "https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-Image.png"
                             }" alt="">
 					  </div>
-					  <div class=" ps-1">${data.record.name}</div>
+					  <div class="text-md ps-1">${data.record.name}</div>
 				  </div>
 				  <div class="flex">
            
