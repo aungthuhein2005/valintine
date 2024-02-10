@@ -54,7 +54,7 @@
                     "Access-Control-Allow-Origin": "*",
                 }
             })
-                .then(response => response.json())
+                .then(response => response)
                 .then(data => {
                     data.forEach((item) => {
                         fetch(`https://api.jsonbin.io/v3/b/${item.record}`, {
