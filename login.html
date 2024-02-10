@@ -76,7 +76,8 @@
                                 }else{
                                     errorText.innerHTML = 'Login fail';
                                 }
-                            }).catch((e)=>{
+                            }).catch((e)=>{l
+                                console.error(e);
                                 errorText.innerHTML = "Server error";
                             })
                     })
