@@ -56,6 +56,7 @@
                 }
             })
                 .then(response => response)
+            
                 .then(data => {
                     data.forEach((item) => {
                         fetch(`https://api.jsonbin.io/v3/b/${item.record}`, {
@@ -76,12 +77,11 @@
                                 }else{
                                     errorText.innerHTML = 'Login fail';
                                 }
-                            }).catch((e)=>{l
-                                console.error(e);
+                            }).catch((e)=>{
                                 errorText.innerHTML = "Server error";
                             })
                     })
-                })
+                }).catch((e)=>console.error(e));
               
             
         }
