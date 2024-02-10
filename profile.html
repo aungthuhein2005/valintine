@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valintime</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/image/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/image/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/image/favicon-32x32.png">
+<link rel="manifest" href="/image/site.webmanifest">
+</head>
+<body class="h-screen">
+
+    <main class="md:w-1/2 m-auto px-4 pt-8">
+        <div class="flex items-center justify-between mb-6">
+            <h1 class="text-xl pb-4 font-bold">Profile</h1>
+            <a href="main.html" class="cursor-pointer text-lg"><img src="./image/home.png" width="35px" height="35px" alt=""></a>
+        </div>
+        <div class="border-b-2">
+            <div class="rounded-full" style="width: 80px;height: 80px;overflow: hidden;">
+                <img src="" width="100%" alt="" id="image">
+            </div>
+            <div class="flex items-center justify-between">
+                <h1 class="text-lg font-bold py-2" id="name">Name</h1>
+                <div class="flex items-center">
+                    <a href="edit_profile.html"><img src="./image/edit.png" width="20px" height="20px" alt=""></a>
+                    <button class="inline border border-red-500 border-2 rounded p-1 text-xs ms-3" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center justify-between py-2">
+            <span>Your Chocolate</span>
+            <div class="flex items-center ">
+                <span class=" rounded font-bold text-lg pe-2" id="choco_count"></span><img src="./image/chocolate.png" width="25px" height="25px" alt="">
+            </div>
+        </div>
+        <div class="text-center font-sm text-gray-500 absolute bottom-10 " style="right: 50%;transform: translateX(50%)">
+            <p><i class="fa-solid fa-copyright text-md pb-2"></i> Copyright - 2024</p>
+            <p>Devloped by ATH</p>
+        </div>
+    </main>
+
+    <script>
+
+        const logout = () =>{
+            localStorage.removeItem("id");
+            window.location.href = "login.html";
+        }
+
+    const user_id = localStorage.getItem("id");
+    if(user_id !== null){
+        const user_id = localStorage.getItem("id");
+    const name = document.getElementById("name");
+    const image = document.getElementById("image");
+    const chocoCount = document.getElementById("choco_count");
+
+    fetch(`https://api.jsonbin.io/v3/b/${user_id}`, {
+		method: 'GET',
+		headers: {
+			"X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+		}
+	}).then(response=>response.json()).then(data=>{
+        name.innerHTML = data.record.name;
+        chocoCount.innerHTML = data.record.chocolate ? data.record.chocolate : 0;
+        image.src = data.record.image;
+    })
+    }else{
+        window.location.href = "index.html";
+    }
+
+    </script>
+   </body>
+</html>
