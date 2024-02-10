@@ -31,7 +31,6 @@ const giveChoco = async (id) => {
         "X-Master-Key":
           "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
       },
-      mode: "no-cors",
     });
 
     const response = await fetchUser.json();
