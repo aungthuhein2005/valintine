@@ -1,5 +1,5 @@
 const user_id = localStorage.getItem("id");
-if (user_id === null) window.location.href = "create.html";
+if (user_id === null) window.location.href = "index.html";
 
 const check = document.getElementById("check");
 const give = document.getElementById("give");
@@ -19,7 +19,7 @@ const click = (link) => {
             mainDiv.removeChild(div);
         }, 5000);
     } else {
-        window.location.href = "create.html";
+        window.location.href = "index.html";
     }
 };
 
@@ -37,14 +37,14 @@ const giveChoco = async (id) => {
         const { chocolate, name, image, phone, password, socialLink } =
             response.record;
 
-        const chocoCount = chocolate + 1;
+        let chocoCount = chocolate + 1;
 
         const updateData = {
             name,
             phone,
             password,
             image,
-            chocoCount,
+            chocolate: chocoCount,
             socialLink,
         };
 
@@ -58,7 +58,7 @@ const giveChoco = async (id) => {
             body: JSON.stringify(updateData),
         });
     } else {
-        window.location.href = "create.html";
+        window.location.href = "index.html";
     }
 };
 

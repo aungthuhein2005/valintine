@@ -31,12 +31,13 @@
                     placeholder="Enter password">
             </div>
             <span class="font-sm text-red-600" id="error"></span>
-            <div class="mt-2"><a href="create.html" class="text-blue-500 ">Create new account</a></div>
+            <div class="mt-2"><a href="main.html" class="text-blue-500 ">Create new account</a></div>
             <button class="w-full p-1 bg-green-500 text-white my-2 rounded font-bold">Login</button>
         </form>
     </main>
 
     <script>
+            if(localStorage.getItem("id") !== null) window.location.href = 'main.html';
         function handleFormSubmission(e) {
             e.preventDefault();
             // Get form values
