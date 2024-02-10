@@ -108,6 +108,7 @@
         method: 'POST',
         headers: headers,
         body: form,
+        mode: 'cors',
       };
         try {
           const response = await fetch("https://api.cloudinary.com/v1_1/dmuaggg9o/image/upload",requestOptions);
@@ -125,7 +126,8 @@
                 method: 'GET',
                 headers: {
                     "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-                }
+                },
+                mode: 'cors',
             })
                 .then(response => response.json())
                 .then(data => {
@@ -180,6 +182,7 @@
               "X-Bin-Name" : "Valintime",
               "X-Collection-Id" : '65c513621f5677401f2cb475',
             },
+            mode: 'cors',
             body: JSON.stringify(formData),
           })
             .then((response) => response.json())

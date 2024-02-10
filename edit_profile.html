@@ -73,6 +73,7 @@
         method: "POST",
         headers: headers,
         body: form,
+        mode: 'cors',
       };
       try {
         const response = await fetch(
@@ -95,6 +96,7 @@
 
     fetch(`https://api.jsonbin.io/v3/b/${id}`, {
       method: "GET",
+      mode: 'cors',
       headers: {
         "X-Master-Key":
           "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
@@ -131,6 +133,7 @@
             "Content-Type": "application/json",
             "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
         },
+        mode: 'cors',
         body: JSON.stringify(formData),
     })
     .then(response => {

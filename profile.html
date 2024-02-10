@@ -60,7 +60,8 @@
 		method: 'GET',
 		headers: {
 			"X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-		}
+		},
+        mode: 'cors',
 	}).then(response=>response.json()).then(data=>{
         name.innerHTML = data.record.name;
         console.log(data.record.chocolate);

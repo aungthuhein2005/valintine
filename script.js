@@ -31,6 +31,8 @@ const giveChoco = async (id) => {
                 "X-Master-Key":
                     "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
             },
+            mode: 'cors',
+            
         });
 
         const response = await fetchData.json();
@@ -50,6 +52,7 @@ const giveChoco = async (id) => {
 
         fetch(`https://api.jsonbin.io/v3/b/${id}`, {
             method: "PUT",
+            mode: 'cors',
             headers: {
                 "Content-Type": "application/json",
                 "X-Master-Key":
@@ -78,7 +81,6 @@ fetch("https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/", {
     .then((response) => response.json())
     .then((data) => {
         data.forEach((item) => {
-            console.log(item);
             if (item.record != user_id) {
                 fetch(`https://api.jsonbin.io/v3/b/${item.record}`, {
                     method: "GET",
@@ -86,6 +88,7 @@ fetch("https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/", {
                         "X-Master-Key":
                             "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
                     },
+                    mode: 'cors',
                 })
                     .then((response) => response.json())
                     .then((data) => {
@@ -128,6 +131,7 @@ fetch("https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/", {
                         });
                     })
                     .catch((error) => {
+                        console.log(error);
                         itemList.innerHTML = "Server error";
                     });
             }
