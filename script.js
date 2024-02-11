@@ -8,10 +8,7 @@ async function checkUser() {
     window.location.href = "login.html";
     localStorage.removeItem("id");
   }
-  else
-  {
-    console.log("else");
-  }
+
 }
 
 const check = document.getElementById("check");
