@@ -24,42 +24,45 @@ const click = (link) => {
 };
 
 const giveChoco = async (id) => {
-  if (user_id !== "") {
-    const fetchUser = await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
-      method: "GET",
-      headers: {
-        "X-Master-Key":
-          "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-      },
-    });
-
-    const response = await fetchUser.json();
-    const { chocolate, name, image, phone, password, socialLink } =
-      response.record;
-
-    let chocoCount = chocolate + 1;
-
-    const updateData = {
-      name,
-      phone,
-      password,
-      image,
-      chocolate: chocoCount,
-      socialLink,
-    };
-
-    fetch(`https://api.jsonbin.io/v3/b/${id}`, {
-      method: "PUT",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Master-Key":
-          "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-      },
-      body: JSON.stringify(updateData),
-    });
-  } else {
-    window.location.href = "index.html";
+  try {
+    if (user_id !== "") {
+        const fetchUserData = await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+          method: "GET",
+          headers: {
+            "X-Master-Key":
+              "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+          },
+        });
+    
+        const response = await fetchUserData.json();
+        const { chocolate, name, image, phone, password, socialLink } =
+          response.record;
+    
+        let chocoCount = chocolate + 1;
+    
+        const updateData = {
+          name,
+          phone,
+          password,
+          image,
+          chocolate: chocoCount,
+          socialLink,
+        };
+    
+        fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Master-Key":
+              "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+          },
+          body: JSON.stringify(updateData),
+        });
+      } else {
+        window.location.href = "index.html";
+      }
+  } catch (error) {
+    console.error(error);
   }
 };
 

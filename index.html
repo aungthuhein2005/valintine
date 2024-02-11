@@ -12,15 +12,35 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="apple-touch-icon" sizes="180x180" href="/image/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/image/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/image/favicon-32x32.png">
-<link rel="manifest" href="/image/site.webmanifest">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/image/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/image/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/image/favicon-32x32.png"
+    />
+    <link rel="manifest" href="/image/site.webmanifest" />
   </head>
+
   <body>
     <main class="md:w-1/2 m-auto px-4">
       <h1 class="text-xl pb-4">Create Account</h1>
-      <form action="" method="post" class="border w-100 p-4"  onsubmit="handleFormSubmission(event)">
+      <form
+        action=""
+        method="post"
+        class="border w-100 p-4"
+        onsubmit="handleFormSubmission(event)"
+      >
         <div class="mt-3">
           <labe class="pb-2 font-bold">Enter Name</labe><br />
           <input
@@ -75,12 +95,14 @@
             name="image"
             id="image"
             class="border outline-none p-1 w-full my-2"
-            placeholder="paste your social link here"
             required
           />
         </div>
         <span id="error" class="text-sm"></span>
-        <div class="mt-2">You have already acccount? <a href="login.html" class="text-blue-500 ">Login</a></div>
+        <div class="mt-2">
+          You have already acccount?
+          <a href="login.html" class="text-blue-500">Login</a>
+        </div>
         <button
           class="w-full p-1 bg-green-500 text-white my-2 rounded font-bold"
         >
@@ -90,113 +112,128 @@
     </main>
 
     <script>
-    if(localStorage.getItem("id") !== null) window.location.href = 'main.html';
+      if (localStorage.getItem("id") !== null)
+        window.location.href = "main.html";
+
       const CLOUD_NAME = "dmuaggg9o";
       const UPLOAD_PRESET = "testing";
 
       const errorText = document.getElementById("error");
 
-      const imgUpload = async(file) => {
+      const imgUpload = async (file) => {
         const form = new FormData();
         form.append("file", file);
         form.append("cloud_name", CLOUD_NAME);
         form.append("upload_preset", UPLOAD_PRESET);
         const headers = new Headers({
-        "X-Unique-Upload-Id": new Date(),
-      });
+          "X-Unique-Upload-Id": new Date(),
+        });
         const requestOptions = {
-        method: 'POST',
-        headers: headers,
-        body: form,
-        mode: 'cors',
-      };
+          method: "POST",
+          headers: headers,
+          body: form,
+          mode: "cors",
+        };
         try {
-          const response = await fetch("https://api.cloudinary.com/v1_1/dmuaggg9o/image/upload",requestOptions);
+          const response = await fetch(
+            "https://api.cloudinary.com/v1_1/dmuaggg9o/image/upload",
+            requestOptions
+          );
           return response;
         } catch (error) {
-            console.error(error);
+          console.error(error);
+        }
+      };
+
+      async function handleFormSubmission(e) {
+        e.preventDefault();
+        errorText.innerHTML = "<span>Accoung is creating...</span>";
+        const name = document.getElementById("name").value;
+        const phone = document.getElementById("phone").value;
+        const password = document.getElementById("password").value;
+        const socialLink = document.getElementById("socialLink").value;
+        const image = document.getElementById("image");
+        const reader = new FileReader();
+        const file = image.files[0];
+        let imageUrl = "";
+
+        //to check phone number exist
+        const checkPhoneResult = await checkPhone(phone);
+        if(!checkPhoneResult){
+          const responseImgUpload = imgUpload(file);
+          imageUrl = await responseImgUpload
+            .then((response) => response.json())
+            .then((data) => {
+              return data.url;
+            });
+
+          const formData = {
+            name: name,
+            phone: phone,
+            password: password,
+            socialLink: socialLink,
+            image: imageUrl,
+            chocolate: 0,
+          };
+          try {
+            fetch('https://api.jsonbin.io/v3/b',{
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': '$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2',
+                'X-Access-Key': '$2a$10$Jc7NAJgOHXTl/bLU.OwBuOeSthtZK7zmXQJIsZVuNmK72qv7XUtr6',
+                'X-Bin-Name': 'Valintime',
+                'X-Collection-Id': '65c513621f5677401f2cb475',
+              },
+              body: JSON.stringify(formData),
+            })
+          } catch (error) {
+            errorText.innerHTML = "Server Error";
+          }
         }
       }
 
-      async function handleFormSubmission (e) {
-        e.preventDefault();
+      async function checkPhone(phone) {
+        try {
+          const binsResponse = await fetch(
+            "https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/",
+            {
+              method: "GET",
+              headers: {
+                "X-Master-Key":
+                  "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+              },
+            }
+          );
 
-        errorText.innerHTML ="<span>Accoung is creating...</span>";
-        fetch('https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/', {
-                method: 'GET',
+          const binsData = await binsResponse.json();
+
+          for (const bin of binsData) {
+            const binResponse = await fetch(
+              `https://api.jsonbin.io/v3/b/${bin.record}`,
+              {
+                method: "GET",
                 headers: {
-                    "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+                  "X-Master-Key":
+                    "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
                 },
-                mode: 'cors',
-            })
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach((item) => {
-                        fetch(`https://api.jsonbin.io/v3/b/${item.record}`, {
-                                method: 'GET',
-                                headers: {
-                                    "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-                                }
-                            })
-                            .then(response => response.json())
-                            .then(value=>{
-                                if(value.record.phone == phone){
-                                  errorText.innerHTML ="<span class='text-red-600'>Accoung already exist...</span>";
-                                  return;
-                                }
-                            }).catch((e)=>{
-                                errorText.innerHTML = "Server error";
-                            })
-                    })
-                })
-            
-
-        const reader = new FileReader();
-        var name = document.getElementById("name").value;
-        var phone = document.getElementById("phone").value;
-        var password = document.getElementById("password").value;
-        var socialLink = document.getElementById("socialLink").value;
-        var image = document.getElementById("image");
-        const file = image.files[0];
-        let imageUrl = '';
-        const responseImgUpload = imgUpload(file);
-        imageUrl = await responseImgUpload.then(response=>response.json()).then(data=>{
-          return data.url;
-        })
-     
-        const formData = {
-          name: name,
-          phone: phone,
-          password: password,
-          socialLink: socialLink,
-          image: imageUrl,
-          chocolate: 0,
-        };        
-
-          fetch("https://api.jsonbin.io/v3/b", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-Master-Key": "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-              "X-Access-Key" : '$2a$10$3QwwqV0pMZPEIGdUVBT5/.Sm87S8Ck7XIRhNHdECRrDFJVNvBn6ym',
-              "X-Bin-Name" : "Valintime",
-              "X-Collection-Id" : '65c513621f5677401f2cb475',
-            },
-            mode: 'no-cors',
-
-            body: JSON.stringify(formData),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if(data){
-                  window.location.href= "main.html";
-                  localStorage.setItem("id",data.metadata.id);
               }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
-      }
+            );
+            const binData = await binResponse.json();
+            if (binData.record.phone == phone) {
+              errorText.innerHTML = "Account is already exist";
+              return true;
+              // break;
+            } else {
+              return false;
+            }
+          }
+        } catch (error) {
+          errorText.innerHTML = "Server error";
+        }
+        }
+
+      // async function postData() { }
     </script>
   </body>
 </html>

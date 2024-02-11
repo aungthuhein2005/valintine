@@ -64,9 +64,9 @@
         mode: 'cors',
 	}).then(response=>response.json()).then(data=>{
         name.innerHTML = data.record.name;
-        console.log(data.record.chocolate);
         chocoCount.innerHTML = data.record.chocolate ? data.record.chocolate : 0;
         image.src = data.record.image;
+        console.log(data.record.image);
     })
     }else{
         window.location.href = "index.html";
