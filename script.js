@@ -5,6 +5,7 @@ async function checkUser() {
     window.location.href = "main.html";
 }else{
     window.location.href = "login.html";
+  localStorage.removeItem("id");
 }
 
 const check = document.getElementById("check");
