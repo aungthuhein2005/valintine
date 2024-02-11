@@ -6,6 +6,7 @@ async function checkUser() {
   console.log(user_id && !(await checkId(user_id)));
   if (user_id && !(await checkId(user_id))) {
     window.location.href = "login.html";
+    localStorage.removeItem("id");
   }
   else
   {
