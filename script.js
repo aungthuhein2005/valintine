@@ -168,7 +168,7 @@ async function checkId(id) {
       },
     }).then(response => response.json())
     .then(response=>{
-      if(response.status == 400){
+      if(response.status == 404 || response.status == 400){
         return false;
       }else{
         return true;
