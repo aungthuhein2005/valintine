@@ -127,8 +127,9 @@
             },
           })
             .then((response) => response.json())
-            .then((response) => {
-                return response.status === 200 ? true : false;
+            .then((data) => {
+                console.log(data);
+                return data.status === 200 ? true : false;
             })
             .catch((e) => {
               console.log(e);
