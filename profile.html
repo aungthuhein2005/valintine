@@ -126,15 +126,11 @@
           })
             .then((response) => response.json())
             .then((response) => {
-              if (response.status == 404 || response.status == 400) {
-                return false;
-              } else {
-                return true;
-              }
+                return response.status === 200 ? true : false;
             })
             .catch((e) => {
               console.log(e);
-              errorText.innerHTML = "Server error";
+              return false;              
             });
         } catch (error) {
           console.log(error);
