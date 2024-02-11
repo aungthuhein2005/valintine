@@ -154,7 +154,7 @@
 
       async function handleFormSubmission(e) {
         e.preventDefault();
-        errorText.innerHTML = "<span>Accoung is creating...</span>";
+        errorText.innerHTML = "<span>Account is creating...</span>";
         const name = document.getElementById("name").value;
         const phone = document.getElementById("phone").value;
         const password = document.getElementById("password").value;
@@ -195,7 +195,7 @@
                 "X-Collection-Id": "65c513621f5677401f2cb475",
               },
               body: JSON.stringify(formData),
-            });
+            }).then(()=>window.location.href = "main.html");
           } catch (error) {
             errorText.innerHTML = "Server Error";
           }
