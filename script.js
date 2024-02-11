@@ -3,7 +3,7 @@ checkUser();
 async function checkUser() {
   if (user_id !== null && (await checkId(user_id))){
     window.location.href = "main.html";
-  }
+  
 }else{
   console.log("else block");
     window.location.href = "login.html";
