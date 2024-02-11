@@ -116,7 +116,6 @@
 
       checkUser();
       async function checkUser() {
-        console.log(await checkId(user_id));
         if (user_id && (await checkId(user_id))) {
           window.location.href = "main.html";
         }
@@ -165,8 +164,6 @@
         let imageUrl = "";
 
         //to check phone number exist
-        console.log(await checkPhone(phone));
-        return;
 
         const checkPhoneResult = await checkPhone(phone);
         if (checkPhoneResult) {
