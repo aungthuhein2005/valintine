@@ -3,6 +3,7 @@ checkUser();
 async function checkUser() {
   if (!user_id && !(await checkId(user_id))) {
     window.location.href = "login.html";
+    localStorage.removeItem("id");
   }
 }
 
@@ -160,9 +161,7 @@ async function fetchData() {
 }
 
 async function checkId(id) {
-  console.log("work", id);
-  try {
-    fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+  return await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
       method: "GET",
       headers: {
         "X-Master-Key":
@@ -171,20 +170,16 @@ async function checkId(id) {
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response.status == 404 || response.status == 400) {
-          return false;
-        } else {
-          return true;
-        }
+        console.log(response);
+        console.log(response.metadata.id)
+        console.log(id);
+        return response.metadata.id === id;
       })
       .catch((e) => {
         console.log(e);
-        errorText.innerHTML = "Server error";
+        return false;
       });
-  } catch (error) {
-    console.log(error);
-    return false;
-  }
+ 
 }
 
 fetchData();
