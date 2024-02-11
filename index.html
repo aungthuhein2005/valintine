@@ -260,6 +260,7 @@
             .then((response) => response.json())
             .then((response) => {
               console.log(response);
+              console.log(response.metadata.id)
               console.log(response.metadata.id === id);
               if (response.metadata.id === id) {
                 return true;
