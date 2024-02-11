@@ -97,30 +97,31 @@
           const binsData = await binsResponse.json();
 
           for (const item of binsData) {
-            const binResponse = await fetch(
-              `https://api.jsonbin.io/v3/b/${item.record}`,
-              {
-                method: "GET",
-                headers: {
-                  "X-Master-Key":
-                    "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-                },
-              }
-            );
+            console.log(item);
+          //   const binResponse = await fetch(
+          //     `https://api.jsonbin.io/v3/b/${item.record}`,
+          //     {
+          //       method: "GET",
+          //       headers: {
+          //         "X-Master-Key":
+          //           "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+          //       },
+          //     }
+          //   );
 
-            const binData = await binResponse.json();
-            console.log(binData);
-            if (
-              binData.record.phone == phone &&
-              binData.record.password == password
-            ) {
-              localStorage.setItem("id", binData.metadata.id);
-              window.location.href = "main.html";
-              return;
-            }
-          }
+          //   const binData = await binResponse.json();
+          //   console.log(binData);
+          //   if (
+          //     binData.record.phone == phone &&
+          //     binData.record.password == password
+          //   ) {
+          //     localStorage.setItem("id", binData.metadata.id);
+          //     window.location.href = "main.html";
+          //     return;
+          //   }
+          // }
   
-          errorText.innerHTML = "<span class='text-red-600'>Login fail</span>";
+          // errorText.innerHTML = "<span class='text-red-600'>Login fail</span>";
         } catch (error) {
           console.error("Error:", error);
           errorText.innerHTML = "<span class='text-red-600'>Server error</span>";
