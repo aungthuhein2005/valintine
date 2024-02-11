@@ -1,13 +1,11 @@
 const user_id = localStorage.getItem("id");
 checkUser();
 async function checkUser() {
-  if (user_id && !(await checkId(user_id))) {
+  if (!user_id || !(await checkId(user_id))) {
     localStorage.removeItem("id");
     window.location.href = "login.html";
   }
-  else if(!user_id){
-    window.location.href = "login.html"
-  }
+  
 
 }
 
