@@ -161,7 +161,8 @@ async function fetchData() {
 
 async function checkId(id) {
   console.log("work",id);
-  fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+   try {
+    fetch(`https://api.jsonbin.io/v3/b/${id}`, {
       method: "GET",
       headers: {
         "X-Master-Key":
@@ -169,7 +170,6 @@ async function checkId(id) {
       },
     }).then(response => response.json())
     .then(response=>{
-      console.log(response);
       if(response.status == 404 || response.status == 400){
         return false;
       }else{
@@ -178,8 +178,11 @@ async function checkId(id) {
     })
     .catch((e)=>{
       console.log(e);
-      return false;
+      errorText.innerHTML = "Server error";
     })
+  } catch (error) {
+    return false;
+  }
 }
 
 
