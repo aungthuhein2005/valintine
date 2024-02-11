@@ -80,18 +80,16 @@
     </main>
 
     <script>
-        const user_id = localStorage.getItem("id");
-        checkUser();
-        async function checkUser() {
-        if (user_id && (await checkId(user_id))) {
-            window.location.href = "profile.html";
-            fetchData();
-        }else{
-            console.log("error");
-            // window.location.href = "login.html";
+      const user_id = localStorage.getItem("id");
+      checkUser();
+      async function checkUser() {
+        if (!user_id && !(await checkId(user_id))) {
+        //   window.location.href = "profile.html";
+          console.log("error");
         }
-        }
-      
+      }
+      fetchData();
+
       const logout = () => {
         localStorage.removeItem("id");
         window.location.href = "login.html";
@@ -99,26 +97,26 @@
 
       async function fetchData() {
         const name = document.getElementById("name");
-          const image = document.getElementById("image");
-          const chocoCount = document.getElementById("choco_count");
+        const image = document.getElementById("image");
+        const chocoCount = document.getElementById("choco_count");
 
-          fetch(`https://api.jsonbin.io/v3/b/${user_id}`, {
-            method: "GET",
-            headers: {
-              "X-Master-Key":
-                "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-            },
-            mode: "cors",
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              name.innerHTML = data.record.name;
-              chocoCount.innerHTML = data.record.chocolate
-                ? data.record.chocolate
-                : 0;
-              image.src = data.record.image;
-              console.log(data.record.image);
-            });
+        fetch(`https://api.jsonbin.io/v3/b/${user_id}`, {
+          method: "GET",
+          headers: {
+            "X-Master-Key":
+              "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+          },
+          mode: "cors",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            name.innerHTML = data.record.name;
+            chocoCount.innerHTML = data.record.chocolate
+              ? data.record.chocolate
+              : 0;
+            image.src = data.record.image;
+            console.log(data.record.image);
+          });
       }
 
       async function checkId(id) {
@@ -133,11 +131,11 @@
           })
             .then((response) => response.json())
             .then((response) => {
-                return response.status === 200 ? true : false;
+              return response.status === 200 ? true : false;
             })
             .catch((e) => {
               console.log(e);
-              return false;              
+              return false;
             });
         } catch (error) {
           console.log(error);
