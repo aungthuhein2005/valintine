@@ -1,13 +1,13 @@
 const user_id = localStorage.getItem("id");
 checkUser();
 async function checkUser() {
-  if (user_id !== null && (await checkId(user_id))){
+  if (user_id !== null && (await checkId(user_id))) {
     window.location.href = "main.html";
-  
-}else{
-  console.log("else block");
+  } else {
+    console.log("else block");
     window.location.href = "login.html";
-  localStorage.removeItem("id");
+    localStorage.removeItem("id");
+  }
 }
 
 const check = document.getElementById("check");
@@ -164,30 +164,30 @@ async function fetchData() {
 }
 
 async function checkId(id) {
-  console.log("work",id);
-   try {
+  console.log("work", id);
+  try {
     fetch(`https://api.jsonbin.io/v3/b/${id}`, {
       method: "GET",
       headers: {
         "X-Master-Key":
           "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
       },
-    }).then(response => response.json())
-    .then(response=>{
-      if(response.status == 404 || response.status == 400){
-        return false;
-      }else{
-        return true;
-      }
     })
-    .catch((e)=>{
-      console.log(e);
-      errorText.innerHTML = "Server error";
-    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.status == 404 || response.status == 400) {
+          return false;
+        } else {
+          return true;
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        errorText.innerHTML = "Server error";
+      });
   } catch (error) {
     return false;
   }
 }
-
 
 fetchData();
