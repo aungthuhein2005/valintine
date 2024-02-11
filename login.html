@@ -109,7 +109,7 @@
             );
 
             const binData = await binResponse.json();
-
+            console.log(binData);
             if (
               binData.record.phone == phone &&
               binData.record.password == password
@@ -119,7 +119,7 @@
               return;
             }
           }
-
+  
           errorText.innerHTML = "<span class='text-red-600'>Login fail</span>";
         } catch (error) {
           console.error("Error:", error);
