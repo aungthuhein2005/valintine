@@ -5,6 +5,7 @@ async function checkUser() {
     window.location.href = "main.html";
   }
 }else{
+  console.log("else block");
     window.location.href = "login.html";
   localStorage.removeItem("id");
 }
