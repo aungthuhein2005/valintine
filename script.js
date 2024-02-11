@@ -5,6 +5,9 @@ async function checkUser() {
     localStorage.removeItem("id");
     window.location.href = "login.html";
   }
+  else if(!user_id){
+    window.location.href = "login.html"
+  }
 
 }
 
