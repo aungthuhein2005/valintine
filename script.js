@@ -1,6 +1,5 @@
 const user_id = localStorage.getItem("id");
 checkUser();
-console.log("this is first line");
 async function checkUser() {
   console.log("hey");
   console.log(await checkId(user_id));
@@ -173,9 +172,8 @@ async function checkId(id) {
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
-        console.log(response.metadata.id)
-        console.log(id);
+        if(response.message === "Bin not found or it doesn't belong to your account")
+          return false;
         return response.metadata.id === id;
       })
       .catch((e) => {
