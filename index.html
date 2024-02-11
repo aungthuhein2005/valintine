@@ -260,6 +260,7 @@
             .then((response) => response.json())
             .then((response) => {
               console.log(response);
+              console.log(response.metadata.id === id);
               if (response.metadata.id === id) {
                 return true;
               }
@@ -268,7 +269,6 @@
             .catch((e) => {
               console.log(e);
               return false;
-              errorText.innerHTML = "Server error";
             });
         } catch (error) {
           console.log(error);
