@@ -248,8 +248,7 @@
       }
 
       async function checkId(id) {
-
-        return fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+        return await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
             method: "GET",
             headers: {
               "X-Master-Key":
@@ -260,6 +259,7 @@
             .then((response) => {
               console.log(response);
               console.log(response.metadata.id)
+              console.log(id);
               return response.metadata.id === id;
             })
             .catch((e) => {
