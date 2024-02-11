@@ -1,5 +1,6 @@
 const user_id = localStorage.getItem("id");
 checkUser();
+console.log("this is first line");
 async function checkUser() {
   console.log("hey");
   console.log(await checkId(user_id));
