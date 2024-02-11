@@ -248,8 +248,8 @@
       }
 
       async function checkId(id) {
-        try {
-          fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+
+        return fetch(`https://api.jsonbin.io/v3/b/${id}`, {
             method: "GET",
             headers: {
               "X-Master-Key":
@@ -266,10 +266,7 @@
               console.log(e);
               return false;
             });
-        } catch (error) {
-          console.log(error);
-          return false;
-        }
+       
       }
 
       // async function postData() { }
