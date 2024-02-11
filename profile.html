@@ -87,8 +87,7 @@
         window.location.href = "login.html";
       };
       async function fetchData() {
-        console.log(user_id);
-        if (user_id !== null) {
+        if (user_id) {
           const name = document.getElementById("name");
           const image = document.getElementById("image");
           const chocoCount = document.getElementById("choco_count");
