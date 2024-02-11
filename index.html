@@ -115,7 +115,7 @@
       const user_id = localStorage.getItem("id");
 
       checkUser();
-      console.log( checkId(user_id));
+      console.log(checkId(user_id));
       async function checkUser() {
         if (user_id && (await checkId(user_id))) {
           window.location.href = "main.html";
@@ -267,6 +267,7 @@
       })
       .catch((e) => {
         console.log(e);
+        return false;
         errorText.innerHTML = "Server error";
       });
   } catch (error) {
