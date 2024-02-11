@@ -116,7 +116,8 @@
 
       async function checkId(id) {
         console.log("work",id);
-        fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+        try {
+            fetch(`https://api.jsonbin.io/v3/b/${id}`, {
             method: "GET",
             headers: {
               "X-Master-Key":
@@ -124,7 +125,7 @@
             },
           }).then(response => response.json())
           .then(response=>{
-            if(response.status == 400){
+            if(response.status == 404 || response.status == 400){
               return false;
             }else{
               return true;
@@ -134,6 +135,10 @@
             console.log(e);
             errorText.innerHTML = "Server error";
           })
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
       }
 
     </script>
