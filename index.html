@@ -114,8 +114,9 @@
     <script>
       const user_id = localStorage.getItem("id");
       checkUser();
-      async function checkUser(){
-        if ( user_id !== null && await checkId(user_id)) window.location.href = "main.html";
+      async function checkUser() {
+        if (user_id !== null && (await checkId(user_id)))
+          window.location.href = "main.html";
       }
 
       const CLOUD_NAME = "dmuaggg9o";
@@ -162,7 +163,7 @@
 
         //to check phone number exist
         const checkPhoneResult = await checkPhone(phone);
-        if(!checkPhoneResult){
+        if (!checkPhoneResult) {
           const responseImgUpload = imgUpload(file);
           imageUrl = await responseImgUpload
             .then((response) => response.json())
@@ -179,17 +180,19 @@
             chocolate: 0,
           };
           try {
-            fetch('https://api.jsonbin.io/v3/b',{
+            fetch("https://api.jsonbin.io/v3/b", {
               method: "POST",
               headers: {
-                'Content-Type': 'application/json',
-                'X-Master-Key': '$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2',
-                'X-Access-Key': '$2a$10$Jc7NAJgOHXTl/bLU.OwBuOeSthtZK7zmXQJIsZVuNmK72qv7XUtr6',
-                'X-Bin-Name': 'Valintime',
-                'X-Collection-Id': '65c513621f5677401f2cb475',
+                "Content-Type": "application/json",
+                "X-Master-Key":
+                  "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+                "X-Access-Key":
+                  "$2a$10$Jc7NAJgOHXTl/bLU.OwBuOeSthtZK7zmXQJIsZVuNmK72qv7XUtr6",
+                "X-Bin-Name": "Valintime",
+                "X-Collection-Id": "65c513621f5677401f2cb475",
               },
               body: JSON.stringify(formData),
-            })
+            });
           } catch (error) {
             errorText.innerHTML = "Server Error";
           }
@@ -234,32 +237,30 @@
         } catch (error) {
           errorText.innerHTML = "Server error";
         }
-        }
+      }
 
-
-        async function checkId(id) {
+      async function checkId(id) {
         try {
-          const binResponse = await fetch(
-              `https://api.jsonbin.io/v3/b/${id}`,
-              {
-                method: "GET",
-                headers: {
-                  "X-Master-Key":
-                    "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-                },
-              }
-            );
-            const binData = await binResponse.json();
-          if(binData.message == "Bin not found or it doesn't belong to your account"){
+          const binResponse = await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+            method: "GET",
+            headers: {
+              "X-Master-Key":
+                "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+            },
+          });
+          const binData = await binResponse.json();
+          if (
+            binData.message ==
+            "Bin not found or it doesn't belong to your account"
+          ) {
             return false;
-          }else{
+          } else {
             return true;
           }
-         
         } catch (error) {
           errorText.innerHTML = "Server error";
         }
-        }
+      }
 
       // async function postData() { }
     </script>
