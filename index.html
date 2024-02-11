@@ -165,8 +165,11 @@
         let imageUrl = "";
 
         //to check phone number exist
+        console.log(await checkPhone(phone));
+        return;
+
         const checkPhoneResult = await checkPhone(phone);
-        if (!checkPhoneResult) {
+        if (checkPhoneResult) {
           const responseImgUpload = imgUpload(file);
           imageUrl = await responseImgUpload
             .then((response) => response.json())
@@ -234,12 +237,13 @@
               }
             );
             const binData = await binResponse.json();
-            if (binData.record.phone == phone) {
+
+            if (binData.record.phone === phone) {
               errorText.innerHTML = "Account is already exist";
-              return true;
+              return false;
               // break;
             } else {
-              return false;
+              return true;
             }
           }
         } catch (error) {
