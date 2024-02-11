@@ -62,7 +62,7 @@
         </div>
         <span class="font-sm text-red-600" id="error"></span>
         <div class="mt-2">
-          <a href="index.html" class="text-blue-500">Create new account</a>
+          <a href="main.html" class="text-blue-500">Create new account</a>
         </div>
         <button
           class="w-full p-1 bg-green-500 text-white my-2 rounded font-bold"
@@ -73,7 +73,7 @@
     </main>
 
     <script>
-      if (localStorage.getItem("id") !== null) window.location.href = "main.html";
+      if (localStorage.getItem("id")) window.location.href = "main.html";
       // function handleFormSubmission(e) {
       //     e.preventDefault();
       //     // Get form values
@@ -126,7 +126,7 @@
         const phone = document.getElementById("phone").value;
         const password = document.getElementById("password").value;
         const errorText = document.getElementById("error");
-
+        errorText.innerHTML = "Account is creating";
         try {
           const binsResponse = await fetch(
             "https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/",
