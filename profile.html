@@ -115,27 +115,27 @@
       }
 
       async function checkId(id) {
-        try {
-          const binResponse = await fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+        console.log("work",id);
+        fetch(`https://api.jsonbin.io/v3/b/${id}`, {
             method: "GET",
             headers: {
               "X-Master-Key":
                 "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
             },
-          });
-          const binData = await binResponse.json();
-          if (
-            binData.message ==
-            "Bin not found or it doesn't belong to your account"
-          ) {
-            return false;
-          } else {
-            return true;
-          }
-        } catch (error) {
-          errorText.innerHTML = "Server error";
-        }
+          }).then(response => response.json())
+          .then(response=>{
+            if(response.status == 400){
+              return false;
+            }else{
+              return true;
+            }
+          })
+          .catch((e)=>{
+            console.log(e);
+            errorText.innerHTML = "Server error";
+          })
       }
+
     </script>
   </body>
 </html>

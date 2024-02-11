@@ -158,4 +158,27 @@ async function fetchData() {
   }
 }
 
+async function checkId(id) {
+  console.log("work",id);
+  fetch(`https://api.jsonbin.io/v3/b/${id}`, {
+      method: "GET",
+      headers: {
+        "X-Master-Key":
+          "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+      },
+    }).then(response => response.json())
+    .then(response=>{
+      if(response.status == 400){
+        return false;
+      }else{
+        return true;
+      }
+    })
+    .catch((e)=>{
+      console.log(e);
+      errorText.innerHTML = "Server error";
+    })
+}
+
+
 fetchData();
