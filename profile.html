@@ -84,8 +84,8 @@
       checkUser();
       async function checkUser() {
         if (!user_id && !(await checkId(user_id))) {
-        //   window.location.href = "profile.html";
           console.log("error");
+            window.location.href = "index.html"
         }
       }
       fetchData();
