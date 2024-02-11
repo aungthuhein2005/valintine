@@ -115,8 +115,8 @@
       const user_id = localStorage.getItem("id");
 
       checkUser();
-      console.log(checkId(user_id));
       async function checkUser() {
+        console.log(await checkId(user_id));
         if (user_id && (await checkId(user_id))) {
           window.location.href = "main.html";
         }
@@ -247,7 +247,7 @@
         }
       }
 
-      function checkId(id) {
+      async function checkId(id) {
         console.log("work", id);
         try {
           fetch(`https://api.jsonbin.io/v3/b/${id}`, {
