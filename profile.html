@@ -80,14 +80,23 @@
     </main>
 
     <script>
-      const user_id = localStorage.getItem("id");
-      fetchData();
+        const user_id = localStorage.getItem("id");
+        checkUser();
+        async function checkUser() {
+        if (user_id && (await checkId(user_id))) {
+            window.location.href = "profile.html";
+            fetchData();
+        }else{
+            window.location.href = "login.html";
+        }
+        }
+      
       const logout = () => {
         localStorage.removeItem("id");
         window.location.href = "login.html";
       };
       async function fetchData() {
-        if (user_id && await checkId(user_id)) {
+        if (user_id && (await checkId(user_id))) {
           const name = document.getElementById("name");
           const image = document.getElementById("image");
           const chocoCount = document.getElementById("choco_count");
@@ -102,7 +111,6 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log(data);
               name.innerHTML = data.record.name;
               chocoCount.innerHTML = data.record.chocolate
                 ? data.record.chocolate
@@ -111,7 +119,6 @@
               console.log(data.record.image);
             });
         } else {
-          console.log("hey");
         //   window.location.href = "index.html";
         }
       }
@@ -126,13 +133,9 @@
                 "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
             },
           })
-            .then((response) =>{
-              console.log(response);
-               response.json()
-            })
-            .then((data) => {
-                console.log(data);
-                return data.status === 200 ? true : false;
+            .then((response) => response.json())
+            .then((response) => {
+                return response.status === 200 ? true : false;
             })
             .catch((e) => {
               console.log(e);
