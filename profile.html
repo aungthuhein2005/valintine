@@ -95,9 +95,9 @@
         localStorage.removeItem("id");
         window.location.href = "login.html";
       };
+
       async function fetchData() {
-        if (user_id && (await checkId(user_id))) {
-          const name = document.getElementById("name");
+        const name = document.getElementById("name");
           const image = document.getElementById("image");
           const chocoCount = document.getElementById("choco_count");
 
@@ -118,9 +118,6 @@
               image.src = data.record.image;
               console.log(data.record.image);
             });
-        } else {
-        //   window.location.href = "index.html";
-        }
       }
 
       async function checkId(id) {
