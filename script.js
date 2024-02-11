@@ -4,7 +4,6 @@ async function checkUser() {
   if (user_id !== null && (await checkId(user_id))) {
     window.location.href = "main.html";
   } else {
-    console.log("else block");
     window.location.href = "login.html";
     localStorage.removeItem("id");
   }
@@ -186,6 +185,7 @@ async function checkId(id) {
         errorText.innerHTML = "Server error";
       });
   } catch (error) {
+    console.log(error);
     return false;
   }
 }
