@@ -1,6 +1,7 @@
 const user_id = localStorage.getItem("id");
 checkUser();
 async function checkUser() {
+  console.log(await checkId(user_id);
   if (user_id !== null && (await checkId(user_id)))
     window.location.href = "main.html";
 }
@@ -168,6 +169,7 @@ async function checkId(id) {
       },
     }).then(response => response.json())
     .then(response=>{
+      console.log(response);
       if(response.status == 404 || response.status == 400){
         return false;
       }else{
@@ -176,7 +178,7 @@ async function checkId(id) {
     })
     .catch((e)=>{
       console.log(e);
-      errorText.innerHTML = "Server error";
+      return false;
     })
 }
 
