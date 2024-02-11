@@ -7,6 +7,10 @@ async function checkUser() {
   if (user_id && !(await checkId(user_id))) {
     window.location.href = "login.html";
   }
+  else
+  {
+    console.log("else");
+  }
 }
 
 const check = document.getElementById("check");
