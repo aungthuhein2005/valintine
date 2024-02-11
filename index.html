@@ -112,8 +112,11 @@
     </main>
 
     <script>
-      if (localStorage.getItem("id") !== null)
-        window.location.href = "main.html";
+      const user_id = localStorage.getItem("id");
+      checkUser();
+      async function checkUser(){
+        if ( user_id !== null && await checkId(user_id)) window.location.href = "main.html";
+      }
 
       const CLOUD_NAME = "dmuaggg9o";
       const UPLOAD_PRESET = "testing";
@@ -141,7 +144,7 @@
           );
           return response;
         } catch (error) {
-          console.error(error);
+          errorText.innerHTML = "Server error";
         }
       };
 
@@ -224,6 +227,45 @@
               errorText.innerHTML = "Account is already exist";
               return true;
               // break;
+            } else {
+              return false;
+            }
+          }
+        } catch (error) {
+          errorText.innerHTML = "Server error";
+        }
+        }
+
+
+        async function checkId(id) {
+        try {
+          const binsResponse = await fetch(
+            "https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/",
+            {
+              method: "GET",
+              headers: {
+                "X-Master-Key":
+                  "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+              },
+            }
+          );
+
+          const binsData = await binsResponse.json();
+
+          for (const bin of binsData) {
+            const binResponse = await fetch(
+              `https://api.jsonbin.io/v3/b/${bin.record}`,
+              {
+                method: "GET",
+                headers: {
+                  "X-Master-Key":
+                    "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
+                },
+              }
+            );
+            const binData = await binResponse.json();
+            if (binData.metadata.id == id) {
+              return true;
             } else {
               return false;
             }
