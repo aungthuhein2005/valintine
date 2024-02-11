@@ -102,6 +102,7 @@
           })
             .then((response) => response.json())
             .then((data) => {
+              console.log(data);
               name.innerHTML = data.record.name;
               chocoCount.innerHTML = data.record.chocolate
                 ? data.record.chocolate
