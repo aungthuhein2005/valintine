@@ -239,22 +239,8 @@
 
         async function checkId(id) {
         try {
-          const binsResponse = await fetch(
-            "https://api.jsonbin.io/v3/c/65c513621f5677401f2cb475/bins/",
-            {
-              method: "GET",
-              headers: {
-                "X-Master-Key":
-                  "$2a$10$Qud2bXwUn9OkErPqUZ9sxOgkEOxDr5nGrk4ybLJyC1YwnavK4c5O2",
-              },
-            }
-          );
-
-          const binsData = await binsResponse.json();
-
-          for (const bin of binsData) {
-            const binResponse = await fetch(
-              `https://api.jsonbin.io/v3/b/${bin.record}`,
+          const binResponse = await fetch(
+              `https://api.jsonbin.io/v3/b/${id}`,
               {
                 method: "GET",
                 headers: {
@@ -264,12 +250,8 @@
               }
             );
             const binData = await binResponse.json();
-            if (binData.metadata.id == id) {
-              return true;
-            } else {
-              return false;
-            }
-          }
+          console.log(binData);
+         
         } catch (error) {
           errorText.innerHTML = "Server error";
         }
